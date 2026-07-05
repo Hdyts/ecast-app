@@ -35,6 +35,7 @@ from app.translator import Translator
 from app.tts_engine import TTSEngine
 from app.summarizer import Summarizer
 from app.llm_manager import LLMManager
+from app.rag_manager import RAGManager
 
 # Logging Configuration
 logging.basicConfig(
@@ -67,6 +68,7 @@ _tts_engine: Optional[TTSEngine] = None
 _preprocessor: Optional[ArabicPreprocessor] = None
 _summarizer: Optional[Summarizer] = None
 _llm_manager: Optional[LLMManager] = None
+_rag_manager: Optional[RAGManager] = None
 
 # File tracking (file_id → dict)
 _uploaded_files: dict[str, dict] = {}
@@ -102,6 +104,12 @@ def get_llm_manager() -> LLMManager:
     if _llm_manager is None:
         _llm_manager = LLMManager()
     return _llm_manager
+
+def get_rag_manager() -> RAGManager:
+    global _rag_manager
+    if _rag_manager is None:
+        _rag_manager = RAGManager()
+    return _rag_manager
 
 # Static Files (Frontend)
 static_dir = Path(__file__).parent.parent / "static"
@@ -181,6 +189,9 @@ async def upload_epub(file: UploadFile = File(...)):
         preprocessor = get_preprocessor()
         clean_text = preprocessor.clean_text(raw_text)
         
+        rag_manager = get_rag_manager()
+        rag_index = rag_manager.build_index(clean_text)
+        
     except Exception as e:
         file_path.unlink(missing_ok=True)
         raise HTTPException(status_code=400, detail=f"Failed to parse ePub: {str(e)}")
@@ -190,6 +201,7 @@ async def upload_epub(file: UploadFile = File(...)):
         "filename": file.filename,
         "metadata": metadata,
         "preview_text": clean_text,
+        "rag_index": rag_index,
         "translations": {}
     }
 
@@ -261,18 +273,24 @@ async def chat_with_file(req: ChatRequest):
         raise HTTPException(status_code=404, detail="File not found")
         
     file_data = _uploaded_files[req.file_id]
-    context_text = file_data["preview_text"]
     
-    # Truncate context to fit in LLM context window
-    max_context = 6000
-    if len(context_text) > max_context:
-        context_text = context_text[:max_context] + "\n...[truncated]"
+    rag_manager = get_rag_manager()
+    rag_index = file_data.get("rag_index", {})
+    
+    # Retrieve relevant context
+    relevant_chunks = rag_manager.search(req.message, rag_index, top_k=3)
+    
+    if relevant_chunks:
+        context_text = "\n\n---\n\n".join(relevant_chunks)
+    else:
+        # If no relevant chunks found, set context to empty to force the LLM to say it doesn't know
+        context_text = ""
         
     system_prompt = (
-        "You are an AI reading assistant. You help users understand a provided document. "
-        "Answer the user's questions based primarily on the following context. "
-        "If you don't know the answer based on the context, say so. "
-        "You must respond in the same language as the user's prompt.\n\n"
+        "You are a strict AI reading assistant. Your ONLY job is to answer based on the Document Context provided below.\n"
+        "RULE 1: You MUST answer ONLY based on the Document Context.\n"
+        "RULE 2: If the Document Context is empty or does not contain the answer, you MUST refuse to answer and say 'Maaf, saya tidak menemukan jawabannya di dokumen ini'.\n"
+        "RULE 3: DO NOT use your internal knowledge. DO NOT hallucinate. You must respond in the same language as the user's prompt.\n\n"
         f"Document Context:\n{context_text}"
     )
     
