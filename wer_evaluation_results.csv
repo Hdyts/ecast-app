@@ -1,0 +1,16 @@
+Timestamp,Language,Reference,Hypothesis,WER
+2026-07-05 08:09:41,ar,السلام عليكم ورحمة الله وبركاته,السلام عليكم ورحمة الله وبركاته,0.0
+2026-07-05 08:09:43,ar,بسم الله الرحمن الرحيم,بسم الله الرحمن الرحيم,0.0
+2026-07-05 08:09:45,ar,إن العلم نور والجهل ظلام,إن العلم نور والجهل ظلم,0.2
+2026-07-05 08:09:47,ar,المسجد الحرام يقع في مكة المكرمة,النسجد الحرام يقع في مكة المقرمة,0.3333
+2026-07-05 08:09:49,ar,قال رسول الله صلى الله عليه وسلم,قال رسول الله صلى الله عليه وسلم,0.0
+2026-07-05 08:09:52,id,selamat datang di podcast ecast, selamat datang di podcast the chast ,0.4
+2026-07-05 08:09:55,id,ilmu pengetahuan adalah cahaya bagi kehidupan manusia, ilmu pengetahuan adalah cahaya bagi kehidupan manusia ,0.0
+2026-07-05 08:09:57,id,universitas indonesia terletak di kota depok jawa barat, universitas indonesia terletak di kota depok jawa barat ,0.0
+2026-07-05 08:10:00,id,teknologi kecerdasan buatan berkembang sangat pesat, teknologi kecerdasan buatan berkembang sangat pesat ,0.0
+2026-07-05 08:10:01,id,buku ini membahas tentang sejarah peradaban islam, buku ini membahas tentang sejarah peradaban islam ,0.0
+2026-07-05 08:10:03,en,welcome to the ecast podcast,welcome to the ecast podcast,0.0
+2026-07-05 08:10:05,en,artificial intelligence is transforming the world,artificial intelligence is transforming the world,0.0
+2026-07-05 08:10:07,en,the university of oxford was founded in the year 1200,the university of oxford was founded in the year 1200,0.0
+2026-07-05 08:10:08,en,machine learning models require large amounts of training data,machine learning models require large amounts of training data,0.0
+2026-07-05 08:10:10,en,this book discusses the history of islamic civilization,this book discusses the history of islamic civilization,0.0

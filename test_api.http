@@ -1,0 +1,55 @@
+### eCast API Test Requests
+### Use with VS Code REST Client extension
+
+### ─── Health Check ───
+GET http://localhost:8000/api/status HTTP/1.1
+
+###
+
+### ─── Upload ePub File ───
+# Replace 'test.epub' with your actual file path
+POST http://localhost:8000/api/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="test.epub"
+Content-Type: application/epub+zip
+
+< ./uploads/test.epub
+--boundary--
+
+###
+
+### ─── Get Chapters ───
+# Replace {file_id} with the actual file ID from upload response
+GET http://localhost:8000/api/chapters/abc12345 HTTP/1.1
+
+###
+
+### ─── Preview Chapter Text ───
+GET http://localhost:8000/api/preview/abc12345/0 HTTP/1.1
+
+###
+
+### ─── Start Processing ───
+POST http://localhost:8000/api/process?file_id=abc12345&chapters=0,1 HTTP/1.1
+
+###
+
+### ─── Check Progress (Polling) ───
+GET http://localhost:8000/api/progress-poll/task1234 HTTP/1.1
+
+###
+
+### ─── Get Audio File ───
+GET http://localhost:8000/api/audio/task1234/ar HTTP/1.1
+
+###
+
+### ─── Get Translated Texts ───
+GET http://localhost:8000/api/text/task1234 HTTP/1.1
+
+###
+
+### ─── Download All as ZIP ───
+GET http://localhost:8000/api/download/task1234 HTTP/1.1

@@ -1,0 +1,32 @@
+# ============================================
+# eCast — Python Dependencies
+# ============================================
+
+# --- Web Framework ---
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+python-multipart==0.0.9
+aiofiles==24.1.0
+
+# --- ePub Parsing ---
+ebooklib==0.18
+beautifulsoup4==4.12.3
+lxml==5.2.2
+
+# --- Machine Translation & Summarization ---
+requests>=2.31.0
+
+# --- Text-to-Speech ---
+edge-tts>=7.2.8
+
+# --- Audio Processing ---
+pydub==0.25.1
+
+# --- Configuration ---
+python-dotenv==1.0.1
+
+# --- NLP Evaluation ---
+nltk==3.9
+sacrebleu==2.4.3
+jiwer==3.0.4
+sentence-transformers==3.0.1

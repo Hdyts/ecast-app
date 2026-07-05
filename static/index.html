@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eCast - AI Reading Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left" id="left-sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-book-open logo-icon"></i> eCast</h2>
+                <button class="toggle-btn" onclick="toggleSidebar('left')" aria-label="Toggle Left Sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <div class="upload-section">
+                <input type="file" id="file-upload" accept=".epub" style="display: none;">
+                <button class="btn btn-primary w-full" onclick="document.getElementById('file-upload').click()">
+                    <i class="fas fa-plus"></i> Upload ePub
+                </button>
+                <div id="upload-status" class="status-msg"></div>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="files-list-section">
+                    <h3>Uploaded Sources</h3>
+                    <ul id="files-list" class="files-list">
+                        <!-- Dynamic list items -->
+                    </ul>
+                </div>
+
+                <div class="audio-list-section">
+                    <h3>Generated Audio</h3>
+                    <ul id="audio-list" class="audio-list">
+                        <!-- Dynamic audio items -->
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Chat Area -->
+        <main class="chat-container">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <button class="toggle-btn btn-show-sidebar" id="btn-show-left" onclick="toggleSidebar('left')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <h2 id="active-file-title">No Source Selected</h2>
+                </div>
+                <div class="chat-header-right">
+                    <button class="toggle-btn" id="btn-show-right" onclick="toggleSidebar('right')" aria-label="Show Document">
+                        <i class="fas fa-file-alt"></i> View Source
+                    </button>
+                </div>
+            </div>
+            
+            <div class="chat-history" id="chat-history">
+                <div class="welcome-message">
+                    <div class="welcome-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Welcome to eCast</h3>
+                    <p>Upload an ePub file on the left to start interacting with it.</p>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <form id="chat-form">
+                    <div class="input-wrapper">
+                        <input type="text" id="chat-input" placeholder="Ask a question or request a summary..." disabled autocomplete="off">
+                        <button type="submit" id="chat-submit" disabled aria-label="Send">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <!-- Right Sidebar (Document Viewer) -->
+        <aside class="sidebar-right collapsed" id="right-sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-file-lines"></i> Document</h2>
+                <button class="toggle-btn" onclick="toggleSidebar('right')" aria-label="Close Right Sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="translation-controls">
+                <select id="doc-lang-select" onchange="loadDocumentContent()">
+                    <option value="ar">Original (Arabic)</option>
+                    <option value="id">Indonesian Translation</option>
+                    <option value="en">English Translation</option>
+                </select>
+            </div>
+
+            <div class="document-content-wrapper">
+                <div id="doc-loading" class="loading-spinner hidden">
+                    <i class="fas fa-circle-notch fa-spin"></i> Translating...
+                </div>
+                <div class="document-content" id="document-content">
+                    <p class="empty-state">Select a file to view its content.</p>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+    
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
