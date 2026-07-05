@@ -1,13 +1,13 @@
-# eCast - Sistem Konversi ePub Arab menjadi Podcast Audio Multi-bahasa
+# eCast - Sistem Konversi ePub Arab menjadi Audio Multi-bahasa
 
-eCast adalah sistem web-based otomatis yang mampu mengonversi buku teks berbahasa Arab berekstensi `.epub` menjadi bentuk *podcast* audio multi-bahasa. Sistem ini memanfaatkan LLM lokal (Ollama dengan `qwen2.5:3b`) untuk terjemahan presisi tinggi dan peringkasan, serta Edge-TTS untuk sintesis suara yang natural layaknya *podcast*.
+eCast adalah sistem web-based otomatis yang mampu mengonversi buku teks berbahasa Arab berekstensi `.epub` menjadi bentuk *podcast* audio multi-bahasa. Sistem ini memanfaatkan LLM lokal (Ollama dengan `qwen2.5:3b`) untuk terjemahan presisi tinggi dan peringkasan, serta Edge-TTS untuk sintesis suara yang natural.
 
 ## Fitur Utama
 1. **Ekstraksi dan Parsing ePub:** Mengekstrak teks per bab dan membersihkan HTML dari file `.epub`.
 2. **Preprocessing Teks Arab:** Membersihkan karakter non-standar, normalisasi huruf/tashkeel, serta segmentasi kalimat pendek.
 3. **Penerjemahan Leksikal (LLM-based):** Menerjemahkan bahasa Arab secara akurat menggunakan LLM lokal (Ollama).
 4. **Peringkasan Teks:** Meringkas teks panjang menjadi narasi singkat otomatis.
-5. **Sintesis Audio Podcast (TTS):** Mengonversi teks menjadi berkas `.mp3` lengkap dengan jeda napas (*silence*) dan normalisasi volume.
+5. **Sintesis Audio (TTS):** Mengonversi teks menjadi berkas `.mp3` lengkap dengan jeda napas (*silence*) dan normalisasi volume.
 6. **Chatbot QA Interaktif:** Fitur tanya jawab seputar materi buku berbasis *System Prompt* dengan LLM.
 
 ## Arsitektur Sistem
